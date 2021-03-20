@@ -1,0 +1,58 @@
+<node>
+  <name>S001</name>
+  <link>https://facebook.com</link>
+  <nodeListPrecondition>
+	<namePrecondition>A999</namePrecondition>
+	<namePrecondition>A500</namePrecondition>
+	<namePrecondition>A001</namePrecondition>
+  </nodeListPrecondition>
+  <nodeListTrigger>
+	<nameTrigger>X888</nameTrigger>
+	<nameTrigger>X100</nameTrigger>
+	<nameTrigger>X035</nameTrigger>
+  </nodeListTrigger>
+  <nodeListDescription>
+	<nameDescription>Z342</nameDescription>
+	<nameDescription>C962</nameDescription>
+	<nameDescription>M009</nameDescription>
+	<nameDescription>A125</nameDescription>
+	<nameDescription>N012</nameDescription>
+	<nameDescription>J013</nameDescription>
+	<nameDescription>K091</nameDescription>
+	<nameDescription>Q015</nameDescription>
+	<nameDescription>W943</nameDescription>
+  </nodeListDescription>
+  <nodeListPostCondition>
+	<namePostCondition>H182</namePostCondition>
+  </nodeListPostCondition>
+  <nodeListReferences>
+	<nameReferences>X888</nameReferences>
+	<nameReferences>X100</nameReferences>
+	<nameReferences>X035</nameReferences>
+  </nodeListReferences>
+</node>
+
+<node>
+  <name>H182</name>
+  <link>https://instagram.com</link>
+  <nodeListPrecondition>
+	<namePrecondition>S001</namePrecondition>
+  </nodeListPrecondition>
+  <nodeListTrigger>
+  
+  </nodeListTrigger>
+  <nodeListDescription>
+	<nameDescription>J013</nameDescription>
+	<nameDescription>K091</nameDescription>
+	<nameDescription>Q015</nameDescription>
+	<nameDescription>W943</nameDescription>
+  </nodeListDescription>
+  <nodeListPostCondition>
+
+  </nodeListPostCondition>
+  <nodeListReferences>
+	<nameReferences>X888</nameReferences>
+	<nameReferences>X100</nameReferences>
+	<nameReferences>X035</nameReferences>
+  </nodeListReferences>
+</node>
