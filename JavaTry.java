@@ -10,7 +10,7 @@ public class JavaTry {
             File file = new File("D:\\Scoala\\Y2S2\\TP\\ProjectJava\\huge-test.xml");
             Scanner myReader = new Scanner(file);
             Node node;
-            String name = null, link = null;// prec, posc, trig, ref, desc;
+            String name = null, link = null;
             List<String> Prec, Postc, Trig, Ref, Desc;
             String [] aux;
             String [] aux2;
@@ -20,12 +20,6 @@ public class JavaTry {
             Trig = new ArrayList<>();
             Ref = new ArrayList<>();
             Desc = new ArrayList<>();
-
-            String preaux = "This node contains no <namePrecondition>s";
-            String postaux = "This node contains no <namePostCondition>s";
-            String trigaux = "This node contains no <nameTrigger>s";
-            String descaux = "This node contains no <nameTrigger>s";
-            String refaux = "This node contains no <nameReferences>s";
 
             List<Node> nodes = new ArrayList<>();
 
@@ -44,11 +38,6 @@ public class JavaTry {
                     Desc = new ArrayList<>();
                     name = null;
                     link = null;
-                    /*prec = null;
-                    posc = null;
-                    trig = null;
-                    ref = null;
-                    desc = null;*/
                 }
 
                 if (line.contains("<name>")) {
