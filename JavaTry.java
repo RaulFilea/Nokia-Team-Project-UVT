@@ -7,11 +7,13 @@ import java.util.Scanner;
 public class JavaTry {
     public static void main (String [] args) {
         try {
-            File file = new File("D:\\Scoala\\Y2S2\\TP\\ProjectJava\\test1.xml");
+            File file = new File("D:\\Scoala\\Y2S2\\TP\\ProjectJava\\huge-test.xml");
             Scanner myReader = new Scanner(file);
             Node node;
-            String name = null, link = null, prec, posc, trig, ref, desc;
+            String name = null, link = null;// prec, posc, trig, ref, desc;
             List<String> Prec, Postc, Trig, Ref, Desc;
+            String [] aux;
+            String [] aux2;
 
             Prec = new ArrayList<>();
             Postc = new ArrayList<>();
@@ -42,32 +44,34 @@ public class JavaTry {
                     Desc = new ArrayList<>();
                     name = null;
                     link = null;
-                    prec = null;
+                    /*prec = null;
                     posc = null;
                     trig = null;
                     ref = null;
-                    desc = null;
+                    desc = null;*/
                 }
 
                 if (line.contains("<name>")) {
-                    name = line.replace("        <name>", "");
-                    name = name.replace("</name>", "");
+                    aux = line.split(">");
+                    aux2 = aux[1].split("<");
+                    name = aux2[0];
                 }
 
                 if (line.contains("<link>")) {
-                    link = line.replace("        <link>", "");
-                    link = link.replace("</link>", "");
+                    aux = line.split(">");
+                    aux2 = aux[1].split("<");
+                    link = aux2[0];
                 }
 
                 if (line.contains("<nodeListPrecondition>")) {
                     line = myReader.nextLine();
                     if (!line.contains("<namePrecondition>")) {
-                        Prec.add(preaux);
+                        //Prec.add(preaux);
                     } else {
                         while (!line.contains("</nodeListPrecondition>")) {
-                            prec = line.replace("            <namePrecondition>", "");
-                            prec = prec.replace("</namePrecondition>", "");
-                            Prec.add(prec);
+                            aux = line.split(">");
+                            aux2 = aux[1].split("<");
+                            Prec.add(aux2[0]);
                             line = myReader.nextLine();
                         }
                     }
@@ -76,12 +80,12 @@ public class JavaTry {
                 if (line.contains("<nodeListPostCondition>")) {
                     line = myReader.nextLine();
                     if (!line.contains("<namePostCondition>")) {
-                        Postc.add(postaux);
+                        //Postc.add(postaux);
                     } else {
                         while (!line.contains("</nodeListPostCondition>")) {
-                            posc = line.replace("            <namePostCondition>", "");
-                            posc = posc.replace("</namePostCondition>", "");
-                            Postc.add(posc);
+                            aux = line.split(">");
+                            aux2 = aux[1].split("<");
+                            Postc.add(aux2[0]);
                             line = myReader.nextLine();
                         }
                     }
@@ -90,12 +94,12 @@ public class JavaTry {
                 if (line.contains("<nodeListTrigger>")) {
                     line = myReader.nextLine();
                     if (!line.contains("<nameTrigger>")) {
-                        Trig.add(trigaux);
+                        //Trig.add(trigaux);
                     } else {
                         while (!line.contains("</nodeListTrigger>")) {
-                            trig = line.replace("            <nameTrigger>", "");
-                            trig = trig.replace("</nameTrigger>", "");
-                            Trig.add(trig);
+                            aux = line.split(">");
+                            aux2 = aux[1].split("<");
+                            Trig.add(aux2[0]);
                             line = myReader.nextLine();
                         }
                     }
@@ -104,12 +108,12 @@ public class JavaTry {
                 if (line.contains("<nodeListDescription>")) {
                     line = myReader.nextLine();
                     if (!line.contains("<nameDescription>")) {
-                        Desc.add(descaux);
+                        //Desc.add(descaux);
                     } else {
                         while (!line.contains("</nodeListDescription>")) {
-                            desc = line.replace("            <nameDescription>", "");
-                            desc = desc.replace("</nameDescription>", "");
-                            Desc.add(desc);
+                            aux = line.split(">");
+                            aux2 = aux[1].split("<");
+                            Desc.add(aux2[0]);
                             line = myReader.nextLine();
                         }
                     }
@@ -118,12 +122,12 @@ public class JavaTry {
                 if (line.contains("<nodeListReferences>")) {
                     line = myReader.nextLine();
                     if (!line.contains("<nameReferences>")) {
-                        Ref.add(refaux);
+                        //Ref.add(refaux);
                     } else {
                         while (!line.contains("</nodeListReferences>")) {
-                            ref = line.replace("            <nameReferences>", "");
-                            ref = ref.replace("</nameReferences>", "");
-                            Ref.add(ref);
+                            aux = line.split(">");
+                            aux2 = aux[1].split("<");
+                            Ref.add(aux2[0]);
                             line = myReader.nextLine();
                         }
                     }
