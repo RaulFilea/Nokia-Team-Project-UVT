@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void statistic00(List<Node> list, String name) {
-        List<String> prec;
+        List<String> aux;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
@@ -19,10 +19,32 @@ public class Main {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
             for (Node el : list) {
-                prec = el.getPreconditions();
-                if (prec.size() == 0) {
+                aux = el.getPreconditions();
+                if (aux.size() == 0) {
                     fw.write("Node " + el.getName() + " has no precondition\n");
                     //System.out.println("Node " + el.getName() + " has no precondition");
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void statistic01(List<Node> list, String name) {
+        List<String> aux;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Node el : list) {
+                aux = el.getTriggers();
+                if (aux.size() == 0) {
+                    fw.write("Node " + el.getName() + " has no triggers\n");
+                    //System.out.println("Node " + el.getName() + " has no triggers");
                 }
             }
             fw.close();
