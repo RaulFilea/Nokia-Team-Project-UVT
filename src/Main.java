@@ -53,6 +53,72 @@ public class Main {
         }
     }
 
+    public static void statistic02(List<Node> list, String name) {
+        List<String> aux;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Node el : list) {
+                aux = el.getDescriptions();
+                if (aux.size() == 0) {
+                    fw.write("Node " + el.getName() + " has no description\n");
+                    //System.out.println("Node " + el.getName() + " has no description");
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void statistic03(List<Node> list, String name) {
+        List<String> aux;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Node el : list) {
+                aux = el.getPostconditions();
+                if (aux.size() == 0) {
+                    fw.write("Node " + el.getName() + " has no postconditions\n");
+                    //System.out.println("Node " + el.getName() + " has no postconditions");
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void statistic04(List<Node> list, String name) {
+        List<String> aux;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Node el : list) {
+                aux = el.getReferences();
+                if (aux.size() == 0) {
+                    fw.write("Node " + el.getName() + " has no references\n");
+                    //System.out.println("Node " + el.getName() + " has no references");
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main (String [] args) {
         try {
             File file = new File("D:\\Scoala\\Y2S2\\TP\\nokiaTP\\huge-test.xml");
@@ -175,7 +241,7 @@ public class Main {
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-            statistic00(nodes, "default");
+            statistic04(nodes, "default");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
