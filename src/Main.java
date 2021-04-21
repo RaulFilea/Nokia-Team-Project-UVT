@@ -1,10 +1,36 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    public static void statistic00(List<Node> list, String name) {
+        List<String> prec;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Node el : list) {
+                prec = el.getPreconditions();
+                if (prec.size() == 0) {
+                    fw.write("Node " + el.getName() + " has no precondition\n");
+                    //System.out.println("Node " + el.getName() + " has no precondition");
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main (String [] args) {
         try {
             File file = new File("D:\\Scoala\\Y2S2\\TP\\nokiaTP\\huge-test.xml");
@@ -124,9 +150,10 @@ public class Main {
             }
             myReader.close();
 
-            for (Node el : nodes) {
+            /*for (Node el : nodes) {
                 System.out.println(el);
-            }
+            }*/
+            statistic00(nodes, "default");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
