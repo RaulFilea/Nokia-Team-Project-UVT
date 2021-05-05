@@ -8,6 +8,7 @@ public class Node {
     private List<String> triggers;
     private List<String> descriptions;
     private List<String> references;
+    private boolean visited = false;
 
     public Node(String name, String link, List<String> preconditions, List<String> postconditions, List<String> triggers, List<String> descriptions, List<String> references) {
         this.name = name;
@@ -74,6 +75,10 @@ public class Node {
     public void setReferences(List<String> references) {
         this.references = references;
     }
+
+    public boolean isVisited() { return visited; }
+
+    public void setVisited(boolean visited) { this.visited = visited; }
 
     @Override
     public String toString() {

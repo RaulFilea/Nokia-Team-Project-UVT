@@ -4,12 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-    public static void statistic00(List<Node> list, String name) {
+    public static void statistic00(Map<String, Node> list, String name) {
         List<String> aux;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
@@ -18,10 +16,10 @@ public class Main {
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
-            for (Node el : list) {
-                aux = el.getPreconditions();
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getPreconditions();
                 if (aux.size() == 0) {
-                    fw.write("Node " + el.getName() + " has no precondition\n");
+                    fw.write("Node " + el.getValue().getName() + " has no precondition\n");
                     //System.out.println("Node " + el.getName() + " has no precondition");
                 }
             }
@@ -31,7 +29,7 @@ public class Main {
         }
     }
 
-    public static void statistic01(List<Node> list, String name) {
+    public static void statistic01(Map<String, Node> list, String name) {
         List<String> aux;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
@@ -40,10 +38,10 @@ public class Main {
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
-            for (Node el : list) {
-                aux = el.getTriggers();
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getTriggers();
                 if (aux.size() == 0) {
-                    fw.write("Node " + el.getName() + " has no triggers\n");
+                    fw.write("Node " + el.getValue().getName() + " has no triggers\n");
                     //System.out.println("Node " + el.getName() + " has no triggers");
                 }
             }
@@ -53,7 +51,7 @@ public class Main {
         }
     }
 
-    public static void statistic02(List<Node> list, String name) {
+    public static void statistic02(Map <String, Node> list, String name) {
         List<String> aux;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
@@ -62,10 +60,10 @@ public class Main {
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
-            for (Node el : list) {
-                aux = el.getDescriptions();
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getDescriptions();
                 if (aux.size() == 0) {
-                    fw.write("Node " + el.getName() + " has no description\n");
+                    fw.write("Node " + el.getValue().getName() + " has no description\n");
                     //System.out.println("Node " + el.getName() + " has no description");
                 }
             }
@@ -75,7 +73,7 @@ public class Main {
         }
     }
 
-    public static void statistic03(List<Node> list, String name) {
+    public static void statistic03(Map<String, Node> list, String name) {
         List<String> aux;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
@@ -84,10 +82,10 @@ public class Main {
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
-            for (Node el : list) {
-                aux = el.getPostconditions();
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getPostconditions();
                 if (aux.size() == 0) {
-                    fw.write("Node " + el.getName() + " has no postconditions\n");
+                    fw.write("Node " + el.getValue().getName() + " has no postconditions\n");
                     //System.out.println("Node " + el.getName() + " has no postconditions");
                 }
             }
@@ -97,7 +95,7 @@ public class Main {
         }
     }
 
-    public static void statistic04(List<Node> list, String name) {
+    public static void statistic04(Map<String, Node> list, String name) {
         List<String> aux;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
@@ -106,10 +104,10 @@ public class Main {
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
-            for (Node el : list) {
-                aux = el.getReferences();
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getReferences();
                 if (aux.size() == 0) {
-                    fw.write("Node " + el.getName() + " has no references\n");
+                    fw.write("Node " + el.getValue().getName() + " has no references\n");
                     //System.out.println("Node " + el.getName() + " has no references");
                 }
             }
@@ -135,7 +133,7 @@ public class Main {
             Ref = new ArrayList<>();
             Desc = new ArrayList<>();
 
-            List<Node> nodes = new ArrayList<>();
+            Map<String, Node> nodes = new HashMap<>();
 
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
@@ -143,7 +141,7 @@ public class Main {
                 if (line.contains("</node>")) {
 
                     node = new Node(name, link, Prec, Postc, Trig, Desc, Ref);
-                    nodes.add(node);
+                    nodes.put(name, node);
 
                     Prec = new ArrayList<>();
                     Postc = new ArrayList<>();
