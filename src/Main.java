@@ -5,8 +5,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
+    public static Map<String, Node> nodes = new HashMap<>();
+    public static List<String> stat09;
+    public static int maxim = 0;
+
     public static void statistic00(Map<String, Node> list, String name) {
         List<String> aux;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
@@ -117,6 +123,55 @@ public class Main {
         }
     }
 
+    public static void statistic09(Map<String, Node> list, String name) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                List<String> aux = new ArrayList<>();
+                iter(aux, el.getKey());
+            }
+            fw.write("Longest path:\n");
+            for (String i : stat09) {
+                fw.write(i + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void iter (List<String> list, String nodeName) {
+        Node aux = nodes.get(nodeName);
+        list.add(nodeName);
+        for (String el : aux.getDescriptions()) {
+            if(!list.contains(el)) {
+                iter(list, el);
+                if (list.size() + 1 > maxim) {
+                    maxim = list.size() + 1;
+                    if(!list.contains(el))
+                        list.add(el);
+                    stat09 = list;
+                }
+            }
+        }
+        for (String el : aux.getPostconditions()) {
+            if(!list.contains(el)) {
+                iter(list, el);
+                if (list.size() + 1 > maxim) {
+                    maxim = list.size() + 1;
+                    if(!list.contains(el))
+                        list.add(el);
+                    stat09 = list;
+                }
+            }
+        }
+    }
+
     public static void main (String [] args) {
         try {
             File file = new File("D:\\Scoala\\Y2S2\\TP\\nokiaTP\\huge-test.xml");
@@ -132,8 +187,6 @@ public class Main {
             Trig = new ArrayList<>();
             Ref = new ArrayList<>();
             Desc = new ArrayList<>();
-
-            Map<String, Node> nodes = new HashMap<>();
 
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
@@ -239,7 +292,7 @@ public class Main {
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-            statistic04(nodes, "default");
+            statistic09(nodes, "default");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
