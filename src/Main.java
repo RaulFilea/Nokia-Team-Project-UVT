@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class Main {
     public static Map<String, Node> nodes = new HashMap<>();
-    public static List<String> stat09;
+    public static List<String> stat10;
     public static int maxim = 0;
 
     public static void statistic00(Map<String, Node> list, String name) {
@@ -123,7 +123,7 @@ public class Main {
         }
     }
 
-    public static void statistic09(Map<String, Node> list, String name) {
+    public static void statistic10(Map<String, Node> list, String name) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
@@ -136,7 +136,7 @@ public class Main {
                 iter(aux, el.getKey());
             }
             fw.write("Longest path:\n");
-            for (String i : stat09) {
+            for (String i : stat10) {
                 fw.write(i + "\n");
             }
             fw.close();
@@ -155,7 +155,7 @@ public class Main {
                     maxim = list.size() + 1;
                     if(!list.contains(el))
                         list.add(el);
-                    stat09 = list;
+                    stat10 = list;
                 }
             }
         }
@@ -166,7 +166,7 @@ public class Main {
                     maxim = list.size() + 1;
                     if(!list.contains(el))
                         list.add(el);
-                    stat09 = list;
+                    stat10 = list;
                 }
             }
         }
