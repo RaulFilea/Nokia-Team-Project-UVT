@@ -174,7 +174,7 @@ public class Main {
 
     public static void main (String [] args) {
         try {
-            File file = new File("D:\\Scoala\\Y2S2\\TP\\nokiaTP\\huge-test.xml");
+            File file = new File("huge-test.xml");
             Scanner myReader = new Scanner(file);
             Node node;
             String name = null, link = null;
