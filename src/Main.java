@@ -139,8 +139,10 @@ public class Main {
                     aux2 = temp.getPostconditions();
                     boolean sw = false;
                     for(String j : aux2){
-                        if(j.equals(el.getValue().getName()))
+                        if (j.equals(el.getValue().getName())) {
                             sw = true;
+                            break;
+                        }
                     }
                     if(sw == false) {
                         fw.write("Node " + el.getValue().getName() + " doesn't appear in the post-conditions of node " + i + "\n");
@@ -170,8 +172,10 @@ public class Main {
                     aux2 = temp.getDescriptions();
                     boolean sw = false;
                     for(String j : aux2){
-                        if(j.equals(el.getValue().getName()))
+                        if (j.equals(el.getValue().getName())) {
                             sw = true;
+                            break;
+                        }
                     }
                     if(sw == false) {
                         fw.write("Node " + el.getValue().getName() + " doesn't appear in the description of node " + i + "\n");
@@ -200,8 +204,10 @@ public class Main {
                     aux2 = temp.getTriggers();
                     boolean sw = false;
                     for(String j : aux2){
-                        if(j.equals(el.getValue().getName()))
+                        if (j.equals(el.getValue().getName())) {
                             sw = true;
+                            break;
+                        }
                     }
                     if(sw == false) {
                         fw.write("Node " + el.getValue().getName() + " doesn't appear in the triggers of node " + i + "\n");
@@ -230,8 +236,10 @@ public class Main {
                     aux2 = temp.getPreconditions();
                     boolean sw = false;
                     for(String j : aux2){
-                        if(j.equals(el.getValue().getName()))
+                        if (j.equals(el.getValue().getName())) {
                             sw = true;
+                            break;
+                        }
                     }
                     if(sw == false) {
                         fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
