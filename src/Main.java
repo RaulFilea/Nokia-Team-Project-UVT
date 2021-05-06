@@ -143,8 +143,98 @@ public class Main {
                             sw = true;
                     }
                     if(sw == false) {
-                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the postconditions of node " + i + "\n");
+                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the post-conditions of node " + i + "\n");
                         ///System.out.println("Node " + el.getValue().getName() + " doesn't appear in the postconditions of node " + i);
+                    }
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void statistic06(Map<String, Node> list, String name) {
+        List<String> aux, aux2;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getTriggers();
+                for (String i : aux) {
+                    Node temp = nodes.get(i);
+                    aux2 = temp.getDescriptions();
+                    boolean sw = false;
+                    for(String j : aux2){
+                        if(j.equals(el.getValue().getName()))
+                            sw = true;
+                    }
+                    if(sw == false) {
+                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the description of node " + i + "\n");
+                    }
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void statistic07(Map<String, Node> list, String name) {
+        List<String> aux, aux2;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getDescriptions();
+                for (String i : aux) {
+                    Node temp = nodes.get(i);
+                    aux2 = temp.getTriggers();
+                    boolean sw = false;
+                    for(String j : aux2){
+                        if(j.equals(el.getValue().getName()))
+                            sw = true;
+                    }
+                    if(sw == false) {
+                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the triggers of node " + i + "\n");
+                    }
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void statistic08(Map<String, Node> list, String name) {
+        List<String> aux, aux2;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getPostconditions();
+                for (String i : aux) {
+                    Node temp = nodes.get(i);
+                    aux2 = temp.getPreconditions();
+                    boolean sw = false;
+                    for(String j : aux2){
+                        if(j.equals(el.getValue().getName()))
+                            sw = true;
+                    }
+                    if(sw == false) {
+                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
                     }
                 }
             }
