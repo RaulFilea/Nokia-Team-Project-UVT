@@ -292,7 +292,7 @@ public class Main {
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-            statistic09(nodes, "default");
+            statistic10(nodes, "default");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
