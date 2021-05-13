@@ -435,7 +435,7 @@ public class Main {
 
     public static void main (String [] args) {
         try {
-            File file = new File("NokiaTP/test-my-script.xml");
+            File file = new File("test-my-script.xml");
             Scanner myReader = new Scanner(file);
             Node node;
             String name = null, link = null;
