@@ -10,7 +10,8 @@ import java.util.stream.Stream;
 
 public class Main {
     public static Map<String, Node> nodes = new HashMap<>();
-    public static List<String> stat10;
+    public static List<String> stat10 = new ArrayList<>();
+    public static List<List> stat13 = new ArrayList<>();
     public static int maxim = 0;
 
     public static void statistic00(Map<String, Node> list, String name) {
@@ -26,7 +27,6 @@ public class Main {
                 aux = el.getValue().getPreconditions();
                 if (aux.size() == 0) {
                     fw.write("Node " + el.getValue().getName() + " has no precondition\n");
-                    //System.out.println("Node " + el.getName() + " has no precondition");
                 }
             }
             fw.close();
@@ -48,7 +48,6 @@ public class Main {
                 aux = el.getValue().getTriggers();
                 if (aux.size() == 0) {
                     fw.write("Node " + el.getValue().getName() + " has no triggers\n");
-                    //System.out.println("Node " + el.getName() + " has no triggers");
                 }
             }
             fw.close();
@@ -70,7 +69,6 @@ public class Main {
                 aux = el.getValue().getDescriptions();
                 if (aux.size() == 0) {
                     fw.write("Node " + el.getValue().getName() + " has no description\n");
-                    //System.out.println("Node " + el.getName() + " has no description");
                 }
             }
             fw.close();
@@ -92,7 +90,6 @@ public class Main {
                 aux = el.getValue().getPostconditions();
                 if (aux.size() == 0) {
                     fw.write("Node " + el.getValue().getName() + " has no postconditions\n");
-                    //System.out.println("Node " + el.getName() + " has no postconditions");
                 }
             }
             fw.close();
@@ -114,7 +111,6 @@ public class Main {
                 aux = el.getValue().getReferences();
                 if (aux.size() == 0) {
                     fw.write("Node " + el.getValue().getName() + " has no references\n");
-                    //System.out.println("Node " + el.getName() + " has no references");
                 }
             }
             fw.close();
@@ -124,7 +120,7 @@ public class Main {
     }
     
     public static void statistic05(Map<String, Node> list, String name) {
-        List<String> aux, aux2;
+        List<String> aux, aux2 = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
@@ -138,18 +134,13 @@ public class Main {
                     if(nodes.containsKey(i)) {
                         Node temp = nodes.get(i);
                         aux2 = temp.getPostconditions();
-                        boolean sw = false;
-                        for (String j : aux2) {
-                            if (j.equals(el.getValue().getName())) {
-                                sw = true;
-                                break;
-                            }
-                        }
+                        boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
-                            fw.write("Node " + el.getValue().getName() + " doesn't appear in the post-conditions of node " + i + "\n");
-                            ///System.out.println("Node " + el.getValue().getName() + " doesn't appear in the postconditions of node " + i);
+                            fw.write("Node " + el.getKey() + " doesn't appear in the post-conditions of node " + i + "\n");
+                            aux2.add(el.getKey());
                         }
                     }
+                    nodes.get(i).setPostconditions(aux2);
                 }
             }
             fw.close();
@@ -159,7 +150,7 @@ public class Main {
     }
 
     public static void statistic06(Map<String, Node> list, String name) {
-        List<String> aux, aux2;
+        List<String> aux, aux2 = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
@@ -173,17 +164,13 @@ public class Main {
                     if(nodes.containsKey(i)) {
                         Node temp = nodes.get(i);
                         aux2 = temp.getDescriptions();
-                        boolean sw = false;
-                        for (String j : aux2) {
-                            if (j.equals(el.getValue().getName())) {
-                                sw = true;
-                                break;
-                            }
-                        }
+                        boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
-                            fw.write("Node " + el.getValue().getName() + " doesn't appear in the description of node " + i + "\n");
+                            fw.write("Node " + el.getKey() + " doesn't appear in the description of node " + i + "\n");
+                            aux2.add(el.getKey());
                         }
                     }
+                    nodes.get(i).setDescriptions(aux2);
                 }
             }
             fw.close();
@@ -193,7 +180,7 @@ public class Main {
     }
 
     public static void statistic07(Map<String, Node> list, String name) {
-        List<String> aux, aux2;
+        List<String> aux, aux2 = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
@@ -207,17 +194,13 @@ public class Main {
                     if(nodes.containsKey(i)) {
                         Node temp = nodes.get(i);
                         aux2 = temp.getTriggers();
-                        boolean sw = false;
-                        for (String j : aux2) {
-                            if (j.equals(el.getValue().getName())) {
-                                sw = true;
-                                break;
-                            }
-                        }
+                        boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             fw.write("Node " + el.getValue().getName() + " doesn't appear in the triggers of node " + i + "\n");
+                            aux2.add(el.getKey());
                         }
                     }
+                    nodes.get(i).setTriggers(aux2);
                 }
             }
             fw.close();
@@ -227,7 +210,7 @@ public class Main {
     }
 
     public static void statistic08(Map<String, Node> list, String name) {
-        List<String> aux, aux2;
+        List<String> aux, aux2 = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
@@ -241,7 +224,7 @@ public class Main {
                     if(nodes.containsKey(i)) {
                         Node temp = nodes.get(i);
                         aux2 = temp.getPreconditions();
-                        boolean sw = false;
+                        boolean sw = aux2.contains(el.getKey());
                         for (String j : aux2) {
                             if (j.equals(el.getValue().getName())) {
                                 sw = true;
@@ -250,8 +233,10 @@ public class Main {
                         }
                         if (sw == false) {
                             fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
+                            aux2.add(el.getKey());
                         }
                     }
+                    nodes.get(i).setPreconditions(aux2);
                 }
             }
             fw.close();
@@ -270,7 +255,7 @@ public class Main {
             FileWriter fw = new FileWriter(fileName);
             for (Map.Entry<String, Node> el : list.entrySet()) {
                 List<String> aux = new ArrayList<>();
-                iter(aux, el.getKey());
+                iter10(aux, el.getKey());
             }
             fw.write("Longest path:\n");
             for (String i : stat10) {
@@ -282,12 +267,12 @@ public class Main {
         }
     }
 
-    public static void iter (List<String> list, String nodeName) {
+    public static void iter10 (List<String> list, String nodeName) {
         Node aux = nodes.get(nodeName);
         list.add(nodeName);
         for (String el : aux.getDescriptions()) {
             if(!list.contains(el)) {
-                iter(list, el);
+                iter10(list, el);
                 if (list.size() + 1 > maxim) {
                     maxim = list.size() + 1;
                     if(!list.contains(el))
@@ -298,7 +283,7 @@ public class Main {
         }
         for (String el : aux.getPostconditions()) {
             if(!list.contains(el)) {
-                iter(list, el);
+                iter10(list, el);
                 if (list.size() + 1 > maxim) {
                     maxim = list.size() + 1;
                     if(!list.contains(el))
@@ -309,9 +294,51 @@ public class Main {
         }
     }
 
+    public static void statistic13(Map<String, Node> list, String name) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = "statistic13_" + fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            List<String> aux = new ArrayList<>();
+            iter13(aux, name, name);
+            fw.write("Cycles containing " + name + ":\n");
+            for (List l : stat13) {
+                for (Object i : l) {
+                    fw.write(i + "->");
+                }
+                fw.write(name + '\n');
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void iter13 (List<String> list, String nodeName, String node) {
+        Node aux = nodes.get(nodeName);
+        list.add(nodeName);
+        for (String el : aux.getDescriptions()) {
+            if(!list.contains(el)) {
+                iter13(list, el, node);
+            } else if (el.equals(node)) {
+                stat13.add(list);
+            }
+        }
+        for (String el : aux.getPostconditions()) {
+            if(!list.contains(el)) {
+                iter13(list, el, node);
+            } else if (el.equals(node)) {
+                stat13.add(list);
+            }
+        }
+    }
+
     public static void main (String [] args) {
         try {
-            File file = new File("huge-test.xml");
+            File file = new File("test-my-script.xml");
             Scanner myReader = new Scanner(file);
             Node node;
             String name = null, link = null;
@@ -429,7 +456,11 @@ public class Main {
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-            statistic00(nodes, "default");
+            statistic05(nodes, "default");
+            statistic06(nodes, "default");
+            statistic07(nodes, "default");
+            statistic08(nodes, "default");
+            System.out.println("_");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
@@ -437,3 +468,5 @@ public class Main {
         }
     }
 }
+
+/** scriptName --runOnScenario <SCENARIO_NAME> | ALL=DEFAULT --checkStatistic <ID> | ALL=DEFAULT --fileName <FILE_NAME> **/
