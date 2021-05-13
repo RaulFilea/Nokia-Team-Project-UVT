@@ -226,18 +226,60 @@ public class Main {
                         Node temp = nodes.get(i);
                         aux2 = temp.getPreconditions();
                         boolean sw = aux2.contains(el.getKey());
-                        for (String j : aux2) {
-                            if (j.equals(el.getValue().getName())) {
-                                sw = true;
-                                break;
-                            }
-                        }
                         if (sw == false) {
                             fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
                             aux2.add(el.getKey());
                         }
                     }
                     nodes.get(i).setPreconditions(aux2);
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void statistic09(Map<String, Node> list, String name) {
+        List<String> aux, aux2,aux3, aux4, aux5, aux6, aux7, aux8, aux9 = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = "statistic09_" + fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getReferences();
+                aux2 = el.getValue().getPreconditions();
+                aux3 = el.getValue().getTriggers();
+                aux4 = el.getValue().getDescriptions();
+                aux5 = el.getValue().getPostconditions();
+                for (String i : aux)
+                    if(nodes.containsKey(i)) {
+                        boolean sw1 = aux2.contains(i);
+                        boolean sw2 = aux3.contains(i);
+                        boolean sw3 = aux4.contains(i);
+                        boolean sw4 = aux5.contains(i);
+                        if (sw1 == false | sw2 == false | sw3 == false | sw4 == false) {
+                            fw.write("Node " + i + " appears in the references but doesn't appear in the pre-conditions/triggers/descriptions/post-conditions" + "\n");
+                        }
+                    }
+                for (String i : aux) {
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux6 = temp.getPreconditions();
+                        aux7 = temp.getTriggers();
+                        aux8 = temp.getDescriptions();
+                        aux9 = temp.getPostconditions();
+                        boolean sw5 = aux6.contains(el.getValue().getName());
+                        boolean sw6 = aux7.contains(el.getValue().getName());
+                        boolean sw7 = aux8.contains(el.getValue().getName());
+                        boolean sw8 = aux9.contains(el.getValue().getName());
+                        if (sw5 == false | sw6 == false | sw7 == false | sw8 == false) {
+                            fw.write("Node " + i + " appears in the references of node" + el.getValue().getName() +" but " + el.getValue().getName() +"doesn't appear in the pre-conditions/triggers/descriptions/post-conditions of node " + i + "\n");
+                        }
+                    }
                 }
             }
             fw.close();
@@ -393,7 +435,7 @@ public class Main {
 
     public static void main (String [] args) {
         try {
-            File file = new File("test-my-script.xml");
+            File file = new File("NokiaTP/test-my-script.xml");
             Scanner myReader = new Scanner(file);
             Node node;
             String name = null, link = null;
@@ -515,6 +557,7 @@ public class Main {
             statistic06(nodes, "default");
             statistic07(nodes, "default");
             statistic08(nodes, "default");**/
+            statistic09(nodes, "default");
             statistic11(nodes, "default");
 
         } catch (FileNotFoundException e) {
