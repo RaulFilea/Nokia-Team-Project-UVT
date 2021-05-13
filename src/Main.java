@@ -15,10 +15,10 @@ public class Main {
 
     public static void statistic00(Map<String, Node> list, String name) {
         List<String> aux;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic00_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -37,10 +37,10 @@ public class Main {
 
     public static void statistic01(Map<String, Node> list, String name) {
         List<String> aux;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic01_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -59,10 +59,10 @@ public class Main {
 
     public static void statistic02(Map <String, Node> list, String name) {
         List<String> aux;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic02_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -81,10 +81,10 @@ public class Main {
 
     public static void statistic03(Map<String, Node> list, String name) {
         List<String> aux;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic03_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -103,10 +103,10 @@ public class Main {
 
     public static void statistic04(Map<String, Node> list, String name) {
         List<String> aux;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic04_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -125,10 +125,10 @@ public class Main {
     
     public static void statistic05(Map<String, Node> list, String name) {
         List<String> aux, aux2;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic05_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -160,10 +160,10 @@ public class Main {
 
     public static void statistic06(Map<String, Node> list, String name) {
         List<String> aux, aux2;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic06_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -194,10 +194,10 @@ public class Main {
 
     public static void statistic07(Map<String, Node> list, String name) {
         List<String> aux, aux2;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic07_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -228,10 +228,10 @@ public class Main {
 
     public static void statistic08(Map<String, Node> list, String name) {
         List<String> aux, aux2;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic08_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -261,10 +261,10 @@ public class Main {
     }
 
     public static void statistic10(Map<String, Node> list, String name) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = fileName + ".txt";
+        fileName = "statistic10_" + fileName + ".txt";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
@@ -429,7 +429,7 @@ public class Main {
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-            statistic05(nodes, "default");
+            statistic00(nodes, "default");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
