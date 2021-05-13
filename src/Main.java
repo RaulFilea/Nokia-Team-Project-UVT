@@ -268,6 +268,33 @@ public class Main {
         }
     }
 
+    public static void statistic11(Map<String, Node> list, String name) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = "statistic11_" + fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                List<String> aux = new ArrayList<>();
+                iter10(aux, el.getKey());
+                maxim = 0;
+                iter11(aux, el.getKey());
+            }
+            fw.write("Longest path containing " + name + ":\n");
+            for (String i : stat11) {
+                fw.write(i + "\n");
+            }
+            for (String i : stat10) {
+                fw.write(i + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void iter10 (List<String> list, String nodeName) {
         Node aux = nodes.get(nodeName);
         list.add(nodeName);
@@ -292,33 +319,6 @@ public class Main {
                     stat10 = list;
                 }
             }
-        }
-    }
-
-    public static void statistic11(Map<String, Node> list, String name) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-        LocalDateTime now = LocalDateTime.now();
-        String fileName = dtf.format(now);
-        fileName = "statistic10_" + fileName + ".txt";
-        try {
-            File file = new File(fileName);
-            FileWriter fw = new FileWriter(fileName);
-            for (Map.Entry<String, Node> el : list.entrySet()) {
-                List<String> aux = new ArrayList<>();
-                iter10(aux, el.getKey());
-                maxim = 0;
-                iter11(aux, el.getKey());
-            }
-            fw.write("Longest path:\n");
-            for (String i : stat11) {
-                fw.write(i + "\n");
-            }
-            for (String i : stat10) {
-                fw.write(i + "\n");
-            }
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -511,11 +511,11 @@ public class Main {
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-            statistic05(nodes, "default");
+            /**statistic05(nodes, "default");
             statistic06(nodes, "default");
             statistic07(nodes, "default");
-            statistic08(nodes, "default");
-            System.out.println("_");
+            statistic08(nodes, "default");**/
+            statistic11(nodes, "default");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
