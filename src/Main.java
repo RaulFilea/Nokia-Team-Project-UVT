@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 public class Main {
     public static Map<String, Node> nodes = new HashMap<>();
     public static List<String> stat10 = new ArrayList<>();
+    public static List<String> stat11 = new ArrayList<>();
     public static List<List> stat13 = new ArrayList<>();
     public static int maxim = 0;
 
@@ -289,6 +290,60 @@ public class Main {
                     if(!list.contains(el))
                         list.add(el);
                     stat10 = list;
+                }
+            }
+        }
+    }
+
+    public static void statistic11(Map<String, Node> list, String name) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = "statistic10_" + fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                List<String> aux = new ArrayList<>();
+                iter10(aux, el.getKey());
+                maxim = 0;
+                iter11(aux, el.getKey());
+            }
+            fw.write("Longest path:\n");
+            for (String i : stat11) {
+                fw.write(i + "\n");
+            }
+            for (String i : stat10) {
+                fw.write(i + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void iter11 (List<String> list, String nodeName) {
+        Node aux = nodes.get(nodeName);
+        list.add(nodeName);
+        for (String el : aux.getTriggers()) {
+            if(!list.contains(el) && !stat10.contains(el)) {
+                iter10(list, el);
+                if (list.size() + 1 > maxim) {
+                    maxim = list.size() + 1;
+                    if(!list.contains(el))
+                        list.add(0, el);
+                    stat11 = list;
+                }
+            }
+        }
+        for (String el : aux.getPreconditions()) {
+            if(!list.contains(el) && !stat10.contains(el)) {
+                iter10(list, el);
+                if (list.size() + 1 > maxim) {
+                    maxim = list.size() + 1;
+                    if(!list.contains(el))
+                        list.add(0, el);
+                    stat11 = list;
                 }
             }
         }
