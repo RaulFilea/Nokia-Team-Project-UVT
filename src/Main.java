@@ -135,18 +135,20 @@ public class Main {
             for (Map.Entry<String, Node> el : list.entrySet()) {
                 aux = el.getValue().getPreconditions();
                 for (String i : aux) {
-                    Node temp = nodes.get(i);
-                    aux2 = temp.getPostconditions();
-                    boolean sw = false;
-                    for(String j : aux2){
-                        if (j.equals(el.getValue().getName())) {
-                            sw = true;
-                            break;
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux2 = temp.getPostconditions();
+                        boolean sw = false;
+                        for (String j : aux2) {
+                            if (j.equals(el.getValue().getName())) {
+                                sw = true;
+                                break;
+                            }
                         }
-                    }
-                    if(sw == false) {
-                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the post-conditions of node " + i + "\n");
-                        ///System.out.println("Node " + el.getValue().getName() + " doesn't appear in the postconditions of node " + i);
+                        if (sw == false) {
+                            fw.write("Node " + el.getValue().getName() + " doesn't appear in the post-conditions of node " + i + "\n");
+                            ///System.out.println("Node " + el.getValue().getName() + " doesn't appear in the postconditions of node " + i);
+                        }
                     }
                 }
             }
@@ -168,17 +170,19 @@ public class Main {
             for (Map.Entry<String, Node> el : list.entrySet()) {
                 aux = el.getValue().getTriggers();
                 for (String i : aux) {
-                    Node temp = nodes.get(i);
-                    aux2 = temp.getDescriptions();
-                    boolean sw = false;
-                    for(String j : aux2){
-                        if (j.equals(el.getValue().getName())) {
-                            sw = true;
-                            break;
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux2 = temp.getDescriptions();
+                        boolean sw = false;
+                        for (String j : aux2) {
+                            if (j.equals(el.getValue().getName())) {
+                                sw = true;
+                                break;
+                            }
                         }
-                    }
-                    if(sw == false) {
-                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the description of node " + i + "\n");
+                        if (sw == false) {
+                            fw.write("Node " + el.getValue().getName() + " doesn't appear in the description of node " + i + "\n");
+                        }
                     }
                 }
             }
@@ -200,17 +204,19 @@ public class Main {
             for (Map.Entry<String, Node> el : list.entrySet()) {
                 aux = el.getValue().getDescriptions();
                 for (String i : aux) {
-                    Node temp = nodes.get(i);
-                    aux2 = temp.getTriggers();
-                    boolean sw = false;
-                    for(String j : aux2){
-                        if (j.equals(el.getValue().getName())) {
-                            sw = true;
-                            break;
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux2 = temp.getTriggers();
+                        boolean sw = false;
+                        for (String j : aux2) {
+                            if (j.equals(el.getValue().getName())) {
+                                sw = true;
+                                break;
+                            }
                         }
-                    }
-                    if(sw == false) {
-                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the triggers of node " + i + "\n");
+                        if (sw == false) {
+                            fw.write("Node " + el.getValue().getName() + " doesn't appear in the triggers of node " + i + "\n");
+                        }
                     }
                 }
             }
@@ -232,17 +238,19 @@ public class Main {
             for (Map.Entry<String, Node> el : list.entrySet()) {
                 aux = el.getValue().getPostconditions();
                 for (String i : aux) {
-                    Node temp = nodes.get(i);
-                    aux2 = temp.getPreconditions();
-                    boolean sw = false;
-                    for(String j : aux2){
-                        if (j.equals(el.getValue().getName())) {
-                            sw = true;
-                            break;
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux2 = temp.getPreconditions();
+                        boolean sw = false;
+                        for (String j : aux2) {
+                            if (j.equals(el.getValue().getName())) {
+                                sw = true;
+                                break;
+                            }
                         }
-                    }
-                    if(sw == false) {
-                        fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
+                        if (sw == false) {
+                            fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
+                        }
                     }
                 }
             }
@@ -346,12 +354,12 @@ public class Main {
                     link = aux2[0];
                 }
 
-                if (line.contains("<nodeListPrecondition>")) {
+                if (line.contains("<nodeListPreCondition>")) {
                     line = myReader.nextLine();
-                    if (!line.contains("<namePrecondition>")) {
+                    if (!line.contains("<namePreCondition>")) {
                         //Prec.add(preaux);
                     } else {
-                        while (!line.contains("</nodeListPrecondition>")) {
+                        while (!line.contains("</nodeListPreCondition>")) {
                             aux = line.split(">");
                             aux2 = aux[1].split("<");
                             Prec.add(aux2[0]);
@@ -421,7 +429,7 @@ public class Main {
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-            statistic10(nodes, "default");
+            statistic05(nodes, "default");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");

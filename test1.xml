@@ -2,11 +2,11 @@
     <node>
         <name>S001</name>
         <link>https://facebook.com</link>
-        <nodeListPrecondition>
-            <namePrecondition>A999</namePrecondition>
-            <namePrecondition>A500</namePrecondition>
-            <namePrecondition>A001</namePrecondition>
-        </nodeListPrecondition>
+        <nodeListPreCondition>
+            <namePreCondition>A999</namePreCondition>
+            <namePreCondition>A500</namePreCondition>
+            <namePreCondition>A001</namePreCondition>
+        </nodeListPreCondition>
         <nodeListTrigger>
             <nameTrigger>X888</nameTrigger>
             <nameTrigger>X100</nameTrigger>
@@ -36,9 +36,9 @@
     <node>
         <name>H182</name>
         <link>https://instagram.com</link>
-        <nodeListPrecondition>
-            <namePrecondition>S001</namePrecondition>
-        </nodeListPrecondition>
+        <nodeListPreCondition>
+            <namePreCondition>S001</namePreCondition>
+        </nodeListPreCondition>
         <nodeListTrigger>
 
         </nodeListTrigger>
