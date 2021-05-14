@@ -12,6 +12,8 @@ public class Main {
     public static Map<String, Node> nodes = new HashMap<>();
     public static List<String> stat10 = new ArrayList<>();
     public static List<String> stat11 = new ArrayList<>();
+    public static List<List> stat12 = new ArrayList<>();
+    public static List<String> passed = new ArrayList<>();
     public static List<List> stat13 = new ArrayList<>();
     public static int maxim = 0;
 
@@ -388,6 +390,60 @@ public class Main {
                     stat11 = list;
                 }
             }
+        }
+    }
+    
+    public static void statistic12(Map<String, Node> list) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = "statistic12_" + fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                List<String> aux = new ArrayList<>();
+                iter12(aux, el.getKey(), el.getKey());
+                passed.add(el.getKey());
+            }//this for goes through all the nodes, finds all the cycles that start from the current node and memorizes
+            //the current node in the passed list so it can be ignored when finding the cycles for the nodes that follow it
+            for (List l : stat12) {
+                boolean sw = false;
+                Object first = new Object();// I tried to get the first element of every cycle but I don't know if I did it right
+                for (Object i : l) {
+                    if(!sw) //this is to memorize the first element of the list (cycle)
+                    {
+                        first = i;
+                        sw = true;
+                    }
+                    fw.write(i + "->");
+                }
+                fw.write(first + "\n");//printing the first element of the cycle
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void iter12 (List<String> list, String nodeName, String node) {
+        Node aux = nodes.get(nodeName);
+        list.add(nodeName);
+        for (String el : aux.getDescriptions()) {
+            if(!passed.contains(el)) //passed is the list that contains the nodes we've passed in the for in the statistic 12 function
+                if(!list.contains(el)) {
+                    iter13(list, el, node);
+                } else if (el.equals(node)) {
+                 stat12.add(list);
+                }
+        }
+        for (String el : aux.getPostconditions()) {
+            if(!passed.contains(el))
+                if(!list.contains(el)) {
+                    iter13(list, el, node);
+                } else if (el.equals(node)) {
+                    stat12.add(list);
+                }
         }
     }
 
