@@ -414,19 +414,19 @@ public class Main {
                 iter12(aux, el.getKey(), el.getKey());
                 passed.add(el.getKey());
             }//this for goes through all the nodes, finds all the cycles that start from the current node and memorizes
-            //the current node in the passed list so it can be ignored when finding the cycles for the nodes that follow it
+            //the current node in the list called passed so it can be ignored when finding the cycles for the nodes that follow it
             for (List l : stat12) {
                 boolean sw = false;
-                Object first = new Object();// I tried to get the first element of every cycle but I don't know if I did it right
+                Object first = new Object();
                 for (Object i : l) {
-                    if(!sw) //this is to memorize the first element of the list (cycle)
+                    if(!sw) //this is to memorize the first element of the list (cycle) so we can print it at the end of the cycle as well
                     {
                         first = i;
                         sw = true;
                     }
                     fw.write(i + "->");
                 }
-                fw.write(first + "\n");//printing the first element of the cycle
+                fw.write(first + "\n");
             }
             fw.close();
         } catch (IOException e) {
