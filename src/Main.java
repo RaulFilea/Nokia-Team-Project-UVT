@@ -341,6 +341,10 @@ public class Main {
 
     public static void iter10 (List<String> list, String nodeName) {
         Node aux = nodes.get(nodeName);
+        if (aux == null) {
+            System.out.println("Node " + nodeName + " does not exist in file.");
+            return;
+        }
         list.add(nodeName);
         for (String el : aux.getDescriptions()) {
             if(!list.contains(el)) {
@@ -368,6 +372,10 @@ public class Main {
 
     public static void iter11 (List<String> list, String nodeName) {
         Node aux = nodes.get(nodeName);
+        if (aux == null) {
+            System.out.println("Node " + nodeName + " does not exist in file.");
+            return;
+        }
         list.add(nodeName);
         for (String el : aux.getTriggers()) {
             if(!list.contains(el) && !stat10.contains(el)) {
@@ -428,6 +436,10 @@ public class Main {
 
     public static void iter12 (List<String> list, String nodeName, String node) {
         Node aux = nodes.get(nodeName);
+        if (aux == null) {
+            System.out.println("Node " + nodeName + " does not exist in file.");
+            return;
+        }
         list.add(nodeName);
         for (String el : aux.getDescriptions()) {
             if(!passed.contains(el)) //passed is the list that contains the nodes we've passed in the for in the statistic 12 function
@@ -444,6 +456,23 @@ public class Main {
                 } else if (el.equals(node)) {
                     stat12.add(list);
                 }
+        }
+    }
+
+    public static void statistic12(Map<String, Node> list, String name) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = "statistic12_" + fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -472,6 +501,10 @@ public class Main {
 
     public static void iter13 (List<String> list, String nodeName, String node) {
         Node aux = nodes.get(nodeName);
+        if (aux == null) {
+            System.out.println("Node " + nodeName + " does not exist in file.");
+            return;
+        }
         list.add(nodeName);
         for (String el : aux.getDescriptions()) {
             if(!list.contains(el)) {
@@ -491,13 +524,15 @@ public class Main {
 
     public static void main (String [] args) {
         try {
-            File file = new File("test-my-script.xml");
-            Scanner myReader = new Scanner(file);
+            File file = null;
+            Scanner in = new Scanner(System.in);
             Node node;
-            String name = null, link = null;
+            String name = null, link = null, specialNode = "default", id = "default";
             List<String> Prec, Postc, Trig, Ref, Desc;
             String [] aux;
             String [] aux2;
+            String [] tokensCline;
+            int i = 0;
 
             Prec = new ArrayList<>();
             Postc = new ArrayList<>();
@@ -505,10 +540,36 @@ public class Main {
             Ref = new ArrayList<>();
             Desc = new ArrayList<>();
 
+            String cline = in.nextLine();
+            tokensCline = cline.split(" ");
+
+            // Interpreting of the command in command line
+            /** scriptName --runOnScenario <SCENARIO_NAME> | ALL=DEFAULT --checkStatistic <ID> | ALL=DEFAULT --fileName <FILE_NAME> **/
+            while (i < tokensCline.length - 1) {
+                if (tokensCline[i].equals("--runOnScenario")) {
+                    i++;
+                    specialNode = tokensCline[i];
+                }
+
+                if (tokensCline[i].equals("--checkStatistic")) {
+                    i++;
+                    id = tokensCline[i];
+                }
+
+                if (tokensCline[i].equals("--fileName")) {
+                    i++;
+                    file = new File(tokensCline[i]);
+                }
+
+                i++;
+            }
+
+            Scanner myReader = new Scanner(file);
+
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
 
-                if (line.contains("</node>")) {
+                if (line.contains("</node>") && name != null) {
 
                     node = new Node(name, link, Prec, Postc, Trig, Desc, Ref);
                     nodes.put(name, node);
@@ -606,15 +667,73 @@ public class Main {
             }
             myReader.close();
 
+            switch (id) {
+                case "00":
+                    statistic00(nodes, "");
+                    break;
+                case "01":
+                    statistic01(nodes, "");
+                    break;
+                case "02":
+                    statistic02(nodes, "");
+                    break;
+                case "03":
+                    statistic03(nodes, "");
+                    break;
+                case "04":
+                    statistic04(nodes, "");
+                    break;
+                case "05":
+                    statistic05(nodes, "");
+                    break;
+                case "06":
+                    statistic06(nodes, "");
+                    break;
+                case "08":
+                    statistic08(nodes, "");
+                    break;
+                case "09":
+                    statistic09(nodes, "");
+                    break;
+                case "10":
+                    statistic10(nodes, "");
+                    break;
+                case "11":
+                    if (specialNode.equals("default")) {
+                        System.out.println("--runOnScenario requires scenario");
+                        break;
+                    }
+                    statistic11(nodes, specialNode);
+                    break;
+                case "12":
+                    statistic12(nodes, "");
+                    break;
+                case "13":
+                    if (specialNode.equals("default")) {
+                        System.out.println("--runOnScenario requires scenario");
+                        break;
+                    }
+                    statistic13(nodes, specialNode);
+                    break;
+                case "default":
+                    statistic00(nodes, "");
+                    statistic01(nodes, "");
+                    statistic02(nodes, "");
+                    statistic03(nodes, "");
+                    statistic04(nodes, "");
+                    statistic05(nodes, "");
+                    statistic06(nodes, "");
+                    statistic07(nodes, "");
+                    statistic08(nodes, "");
+                    statistic09(nodes, "");
+                    statistic10(nodes, "");
+                    statistic11(nodes, specialNode);
+                    statistic12(nodes, "");
+                    statistic13(nodes, specialNode);
+            }
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-            /**statistic05(nodes, "default");
-            statistic06(nodes, "default");
-            statistic07(nodes, "default");
-            statistic08(nodes, "default");**/
-            statistic09(nodes, "default");
-            statistic11(nodes, "default");
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
