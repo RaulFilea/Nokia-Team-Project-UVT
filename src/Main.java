@@ -401,7 +401,7 @@ public class Main {
         }
     }
     
-    public static void statistic12(Map<String, Node> list) {
+    public static void statistic12(Map<String, Node> list, String name) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
@@ -456,23 +456,6 @@ public class Main {
                 } else if (el.equals(node)) {
                     stat12.add(list);
                 }
-        }
-    }
-
-    public static void statistic12(Map<String, Node> list, String name) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-        LocalDateTime now = LocalDateTime.now();
-        String fileName = dtf.format(now);
-        fileName = "statistic12_" + fileName + ".txt";
-        try {
-            File file = new File(fileName);
-            FileWriter fw = new FileWriter(fileName);
-            for (Map.Entry<String, Node> el : list.entrySet()) {
-
-            }
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
