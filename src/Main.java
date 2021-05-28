@@ -513,8 +513,7 @@ public class Main {
                 aux = el.getValue().getPreconditions();
                 for (String i : aux) {
                     if(nodes.containsKey(i)) {
-                        Node temp = nodes.get(i);
-                        aux2 = temp.getPostconditions();
+                        aux2 = nodes.get(i).getPostconditions();
                         boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             //fw.write("Node " + el.getKey() + " doesn't appear in the post-conditions of node " + i + "\n");
@@ -526,8 +525,7 @@ public class Main {
                 aux = el.getValue().getTriggers();
                 for (String i : aux) {
                     if(nodes.containsKey(i)) {
-                        Node temp = nodes.get(i);
-                        aux2 = temp.getDescriptions();
+                        aux2 = nodes.get(i).getDescriptions();
                         boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             //fw.write("Node " + el.getKey() + " doesn't appear in the description of node " + i + "\n");
@@ -539,8 +537,7 @@ public class Main {
                 aux = el.getValue().getDescriptions();
                 for (String i : aux) {
                     if(nodes.containsKey(i)) {
-                        Node temp = nodes.get(i);
-                        aux2 = temp.getTriggers();
+                        aux2 = nodes.get(i).getTriggers();
                         boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             //fw.write("Node " + el.getValue().getName() + " doesn't appear in the triggers of node " + i + "\n");
@@ -552,8 +549,7 @@ public class Main {
                 aux = el.getValue().getPostconditions();
                 for (String i : aux) {
                     if(nodes.containsKey(i)) {
-                        Node temp = nodes.get(i);
-                        aux2 = temp.getPreconditions();
+                        aux2 = nodes.get(i).getPreconditions();
                         boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             //fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
