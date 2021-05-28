@@ -500,15 +500,15 @@ public class Main {
     }
 
     public static void heal (Map<String, Node> list) {
-        List<String> aux = new ArrayList<>(), aux2 = new ArrayList<>(), aux3 = new ArrayList<>(), aux4 = new ArrayList<>(), aux5 = new ArrayList<>();
-        Set<String> s = new HashSet<>();
+        List<String> aux = new ArrayList<>(), aux2 = new ArrayList<>(), ref = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
-        fileName = "heal_" + fileName + ".txt";
+        fileName = "heal_" + fileName + ".xml";
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
+            fw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<nodes>\n");
             for (Map.Entry<String, Node> el : list.entrySet()) {
                 aux = el.getValue().getPreconditions();
                 for (String i : aux) {
@@ -559,15 +559,64 @@ public class Main {
                     nodes.get(i).setPreconditions(aux2);
                 }
             }
+            // Heal references, only after rest is healed.
+            // Print each node since no healing needed anymore.
             for (Map.Entry<String, Node> el : list.entrySet()) {
-                aux = el.getValue().getPreconditions();
-                aux2 = el.getValue().getPostconditions();
-                aux3 = el.getValue().getDescriptions();
-                aux4 = el.getValue().getTriggers();
-                aux5 = el.getValue().getReferences();
+                ref = el.getValue().getReferences();
 
-                s = new HashSet<>(Stream.of(aux, aux2, aux3, aux4, aux5).flatMap(Collection::stream).collect(Collectors.toList()));
-                fw.write(String.valueOf(s));
+                fw.write("\t<node>\n");
+                fw.write("\t\t<name>" + el.getKey() + "</name>\n");
+                fw.write("\t\t<link>" + el.getValue().getLink() + "</link>\n");
+                aux = el.getValue().getPreconditions();
+                fw.write("\t\t<nodeListPreCondition>\n");
+                for (String i : aux) {
+                    fw.write("\t\t\t<namePreCondition>" + i + "</namePreCondition>\n");
+                    if(!ref.contains(i)) {
+                        ref.add(i);
+                    }
+                }
+                fw.write("\t\t</nodeListPreCondition>\n");
+
+                aux = el.getValue().getTriggers();
+                fw.write("\t\t<nodeListTrigger>\n");
+                for (String i : aux) {
+                    fw.write("\t\t\t<nameTrigger>" + i + "</nameTrigger>\n");
+                    if(!ref.contains(i)) {
+                        ref.add(i);
+                    }
+                }
+                fw.write("\t\t</nodeListTrigger>\n");
+
+                aux = el.getValue().getDescriptions();
+                fw.write("\t\t<nodeListDescription>\n");
+                for (String i : aux) {
+                    fw.write("\t\t\t<nameDescription>" + i + "</nameDescription>\n");
+                    if(!ref.contains(i)) {
+                        ref.add(i);
+                    }
+                }
+                fw.write("\t\t</nodeListDescription>\n");
+
+                aux = el.getValue().getPostconditions();
+                fw.write("\t\t<nodeListPostCondition>\n");
+                for (String i : aux) {
+                    fw.write("\t\t\t<namePostCondition>" + i + "</namePostCondition>\n");
+                    if(!ref.contains(i)) {
+                        ref.add(i);
+                    }
+                }
+                fw.write("\t\t</nodeListPostCondition>\n");
+
+                fw.write("\t\t<nodeListReferences>\n");
+                for (String i : ref) {
+                    fw.write("\t\t\t<nameReference>" + i + "</nameReference>\n");
+                }
+                fw.write("\t\t</nodeListReferences>\n");
+
+
+                //s = new HashSet<>(Stream.of(aux, aux2, aux3, aux4, aux5).flatMap(Collection::stream).collect(Collectors.toList()));
+
+                //fw.write(String.valueOf(s));
             }
             fw.close();
         } catch (IOException e) {
