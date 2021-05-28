@@ -320,12 +320,10 @@ public class Main {
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
-            for (Map.Entry<String, Node> el : list.entrySet()) {
-                List<String> aux = new ArrayList<>();
-                iter10(aux, el.getKey());
-                maxim = 0;
-                iter11(aux, el.getKey());
-            }
+            List<String> aux = new ArrayList<>();
+            iter10(aux, name);
+            maxim = 0; aux = new ArrayList<>();
+            iter11(aux, name);
             fw.write("Longest path containing " + name + ":\n");
             for (String i : stat11) {
                 fw.write(i + "\n");
@@ -416,17 +414,8 @@ public class Main {
             }//this for goes through all the nodes, finds all the cycles that start from the current node and memorizes
             //the current node in the list called passed so it can be ignored when finding the cycles for the nodes that follow it
             for (List l : stat12) {
-                boolean sw = false;
-                Object first = new Object();
-                for (Object i : l) {
-                    if(!sw) //this is to memorize the first element of the list (cycle) so we can print it at the end of the cycle as well
-                    {
-                        first = i;
-                        sw = true;
-                    }
-                    fw.write(i + "->");
-                }
-                fw.write(first + "\n");
+                fw.write(String.valueOf(l));
+                fw.write("\n");
             }
             fw.close();
         } catch (IOException e) {
@@ -444,17 +433,21 @@ public class Main {
         for (String el : aux.getDescriptions()) {
             if(!passed.contains(el)) //passed is the list that contains the nodes we've passed in the for in the statistic 12 function
                 if(!list.contains(el)) {
-                    iter13(list, el, node);
+                    iter12(list, el, node);
                 } else if (el.equals(node)) {
-                 stat12.add(list);
+                    list.add(node);
+                    stat12.add(list);
+                    break;
                 }
         }
         for (String el : aux.getPostconditions()) {
             if(!passed.contains(el))
                 if(!list.contains(el)) {
-                    iter13(list, el, node);
+                    iter12(list, el, node);
                 } else if (el.equals(node)) {
+                    list.add(node);
                     stat12.add(list);
+                    break;
                 }
         }
     }
@@ -502,6 +495,86 @@ public class Main {
             } else if (el.equals(node)) {
                 stat13.add(list);
             }
+        }
+    }
+
+    public static void heal (Map<String, Node> list) {
+        List<String> aux = new ArrayList<>(), aux2 = new ArrayList<>(), aux3 = new ArrayList<>(), aux4 = new ArrayList<>(), aux5 = new ArrayList<>();
+        Set<String> s = new HashSet<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = dtf.format(now);
+        fileName = "heal_" + fileName + ".txt";
+        try {
+            File file = new File(fileName);
+            FileWriter fw = new FileWriter(fileName);
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getPreconditions();
+                for (String i : aux) {
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux2 = temp.getPostconditions();
+                        boolean sw = aux2.contains(el.getKey());
+                        if (sw == false) {
+                            //fw.write("Node " + el.getKey() + " doesn't appear in the post-conditions of node " + i + "\n");
+                            aux2.add(el.getKey());
+                        }
+                    }
+                    nodes.get(i).setPostconditions(aux2);
+                }
+                aux = el.getValue().getTriggers();
+                for (String i : aux) {
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux2 = temp.getDescriptions();
+                        boolean sw = aux2.contains(el.getKey());
+                        if (sw == false) {
+                            //fw.write("Node " + el.getKey() + " doesn't appear in the description of node " + i + "\n");
+                            aux2.add(el.getKey());
+                        }
+                    }
+                    nodes.get(i).setDescriptions(aux2);
+                }
+                aux = el.getValue().getDescriptions();
+                for (String i : aux) {
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux2 = temp.getTriggers();
+                        boolean sw = aux2.contains(el.getKey());
+                        if (sw == false) {
+                            //fw.write("Node " + el.getValue().getName() + " doesn't appear in the triggers of node " + i + "\n");
+                            aux2.add(el.getKey());
+                        }
+                    }
+                    nodes.get(i).setTriggers(aux2);
+                }
+                aux = el.getValue().getPostconditions();
+                for (String i : aux) {
+                    if(nodes.containsKey(i)) {
+                        Node temp = nodes.get(i);
+                        aux2 = temp.getPreconditions();
+                        boolean sw = aux2.contains(el.getKey());
+                        if (sw == false) {
+                            //fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
+                            aux2.add(el.getKey());
+                        }
+                    }
+                    nodes.get(i).setPreconditions(aux2);
+                }
+            }
+            for (Map.Entry<String, Node> el : list.entrySet()) {
+                aux = el.getValue().getPreconditions();
+                aux2 = el.getValue().getPostconditions();
+                aux3 = el.getValue().getDescriptions();
+                aux4 = el.getValue().getTriggers();
+                aux5 = el.getValue().getReferences();
+
+                s = new HashSet<>(Stream.of(aux, aux2, aux3, aux4, aux5).flatMap(Collection::stream).collect(Collectors.toList()));
+                fw.write(String.valueOf(s));
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -701,6 +774,9 @@ public class Main {
                     }
                     statistic13(nodes, specialNode);
                     break;
+                case "heal":
+                    heal(nodes);
+                    break;
                 case "default":
                     statistic00(nodes, "");
                     statistic01(nodes, "");
@@ -720,7 +796,7 @@ public class Main {
             /*for (Node el : nodes) {
                 System.out.println(el);
             }*/
-
+            System.out.println(" _");
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
