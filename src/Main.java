@@ -346,7 +346,7 @@ public class Main {
         list.add(nodeName);
         for (String el : aux.getDescriptions()) {
             if(!list.contains(el)) {
-                iter10(list, el);
+                iter10(new ArrayList<String>(list), el);
                 if (list.size() + 1 > maxim) {
                     maxim = list.size() + 1;
                     if(!list.contains(el))
@@ -357,7 +357,7 @@ public class Main {
         }
         for (String el : aux.getPostconditions()) {
             if(!list.contains(el)) {
-                iter10(list, el);
+                iter10(new ArrayList<String>(list), el);
                 if (list.size() + 1 > maxim) {
                     maxim = list.size() + 1;
                     if(!list.contains(el))
@@ -377,7 +377,7 @@ public class Main {
         list.add(nodeName);
         for (String el : aux.getTriggers()) {
             if(!list.contains(el) && !stat10.contains(el)) {
-                iter10(list, el);
+                iter10(new ArrayList<String>(list), el);
                 if (list.size() + 1 > maxim) {
                     maxim = list.size() + 1;
                     if(!list.contains(el))
@@ -388,7 +388,7 @@ public class Main {
         }
         for (String el : aux.getPreconditions()) {
             if(!list.contains(el) && !stat10.contains(el)) {
-                iter10(list, el);
+                iter10(new ArrayList<String>(list), el);
                 if (list.size() + 1 > maxim) {
                     maxim = list.size() + 1;
                     if(!list.contains(el))
@@ -400,6 +400,7 @@ public class Main {
     }
     
     public static void statistic12(Map<String, Node> list, String name) {
+        List<String> aux;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         LocalDateTime now = LocalDateTime.now();
         String fileName = dtf.format(now);
@@ -408,7 +409,7 @@ public class Main {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
             for (Map.Entry<String, Node> el : list.entrySet()) {
-                List<String> aux = new ArrayList<>();
+                aux = new ArrayList<>();
                 iter12(aux, el.getKey(), el.getKey());
                 passed.add(el.getKey());
             }//this for goes through all the nodes, finds all the cycles that start from the current node and memorizes
@@ -433,7 +434,7 @@ public class Main {
         for (String el : aux.getDescriptions()) {
             if(!passed.contains(el)) //passed is the list that contains the nodes we've passed in the for in the statistic 12 function
                 if(!list.contains(el)) {
-                    iter12(list, el, node);
+                    iter12(new ArrayList<String>(list), el, node);
                 } else if (el.equals(node)) {
                     list.add(node);
                     stat12.add(list);
@@ -443,7 +444,7 @@ public class Main {
         for (String el : aux.getPostconditions()) {
             if(!passed.contains(el))
                 if(!list.contains(el)) {
-                    iter12(list, el, node);
+                    iter12(new ArrayList<String>(list), el, node);
                 } else if (el.equals(node)) {
                     list.add(node);
                     stat12.add(list);
@@ -484,14 +485,14 @@ public class Main {
         list.add(nodeName);
         for (String el : aux.getDescriptions()) {
             if(!list.contains(el)) {
-                iter13(list, el, node);
+                iter13(new ArrayList<String>(list), el, node);
             } else if (el.equals(node)) {
                 stat13.add(list);
             }
         }
         for (String el : aux.getPostconditions()) {
             if(!list.contains(el)) {
-                iter13(list, el, node);
+                iter13(new ArrayList<String>(list), el, node);
             } else if (el.equals(node)) {
                 stat13.add(list);
             }
