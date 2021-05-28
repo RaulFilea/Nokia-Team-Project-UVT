@@ -140,10 +140,10 @@ public class Main {
                         boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             fw.write("Node " + el.getKey() + " doesn't appear in the post-conditions of node " + i + "\n");
-                            aux2.add(el.getKey());
+                            //aux2.add(el.getKey());
                         }
                     }
-                    nodes.get(i).setPostconditions(aux2);
+                    //nodes.get(i).setPostconditions(aux2);
                 }
             }
             fw.close();
@@ -170,10 +170,10 @@ public class Main {
                         boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             fw.write("Node " + el.getKey() + " doesn't appear in the description of node " + i + "\n");
-                            aux2.add(el.getKey());
+                            //aux2.add(el.getKey());
                         }
                     }
-                    nodes.get(i).setDescriptions(aux2);
+                    //nodes.get(i).setDescriptions(aux2);
                 }
             }
             fw.close();
@@ -200,10 +200,10 @@ public class Main {
                         boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             fw.write("Node " + el.getValue().getName() + " doesn't appear in the triggers of node " + i + "\n");
-                            aux2.add(el.getKey());
+                            //aux2.add(el.getKey());
                         }
                     }
-                    nodes.get(i).setTriggers(aux2);
+                    //nodes.get(i).setTriggers(aux2);
                 }
             }
             fw.close();
@@ -230,10 +230,10 @@ public class Main {
                         boolean sw = aux2.contains(el.getKey());
                         if (sw == false) {
                             fw.write("Node " + el.getValue().getName() + " doesn't appear in the pre-conditions of node " + i + "\n");
-                            aux2.add(el.getKey());
+                            //aux2.add(el.getKey());
                         }
                     }
-                    nodes.get(i).setPreconditions(aux2);
+                    //nodes.get(i).setPreconditions(aux2);
                 }
             }
             fw.close();
@@ -251,35 +251,35 @@ public class Main {
         try {
             File file = new File(fileName);
             FileWriter fw = new FileWriter(fileName);
-            for (Map.Entry<String, Node> el : list.entrySet()) {
+            for (Map.Entry<String, Node> el : list.entrySet()) { //el = S1
                 aux = el.getValue().getReferences();
                 aux2 = el.getValue().getPreconditions();
                 aux3 = el.getValue().getTriggers();
                 aux4 = el.getValue().getDescriptions();
                 aux5 = el.getValue().getPostconditions();
-                for (String i : aux)
+                for (String i : aux) //S1 reference
                     if(nodes.containsKey(i)) {
-                        boolean sw1 = aux2.contains(i);
-                        boolean sw2 = aux3.contains(i);
-                        boolean sw3 = aux4.contains(i);
-                        boolean sw4 = aux5.contains(i);
-                        if (sw1 == false | sw2 == false | sw3 == false | sw4 == false) {
-                            fw.write("Node " + i + " appears in the references but doesn't appear in the pre-conditions/triggers/descriptions/post-conditions" + "\n");
+                        boolean sw1 = aux2.contains(i); //S1
+                        boolean sw2 = aux3.contains(i); //S1
+                        boolean sw3 = aux4.contains(i); //S1
+                        boolean sw4 = aux5.contains(i); //S1
+                        if (sw1 == false && sw2 == false && sw3 == false && sw4 == false) {
+                            fw.write("Node " + i + " appears in the references of " + el.getKey() + " but doesn't appear in the pre-conditions/triggers/descriptions/post-conditions" + "\n");
                         }
                     }
-                for (String i : aux) {
+                for (String i : aux) { //aux from S1, i -> S2
                     if(nodes.containsKey(i)) {
-                        Node temp = nodes.get(i);
-                        aux6 = temp.getPreconditions();
-                        aux7 = temp.getTriggers();
-                        aux8 = temp.getDescriptions();
-                        aux9 = temp.getPostconditions();
-                        boolean sw5 = aux6.contains(el.getValue().getName());
-                        boolean sw6 = aux7.contains(el.getValue().getName());
-                        boolean sw7 = aux8.contains(el.getValue().getName());
-                        boolean sw8 = aux9.contains(el.getValue().getName());
-                        if (sw5 == false | sw6 == false | sw7 == false | sw8 == false) {
-                            fw.write("Node " + i + " appears in the references of node" + el.getValue().getName() +" but " + el.getValue().getName() +"doesn't appear in the pre-conditions/triggers/descriptions/post-conditions of node " + i + "\n");
+                        Node temp = nodes.get(i); //temp = S2
+                        aux6 = temp.getPreconditions(); //S2
+                        aux7 = temp.getTriggers(); //S2
+                        aux8 = temp.getDescriptions(); //S2
+                        aux9 = temp.getPostconditions(); //S2
+                        boolean sw5 = aux6.contains(el.getKey());
+                        boolean sw6 = aux7.contains(el.getKey());
+                        boolean sw7 = aux8.contains(el.getKey());
+                        boolean sw8 = aux9.contains(el.getKey());
+                        if (sw5 == false && sw6 == false && sw7 == false && sw8 == false) {
+                            fw.write("Node " + i + " appears in the references of node " + el.getKey() +" but " + el.getKey() +" doesn't appear in the pre-conditions/triggers/descriptions/post-conditions of node " + i + "\n");
                         }
                     }
                 }
@@ -636,7 +636,7 @@ public class Main {
 
                 if (line.contains("<nodeListReferences>")) {
                     line = myReader.nextLine();
-                    if (!line.contains("<nameReferences>")) {
+                    if (!line.contains("<nameReference>")) {
                         //Ref.add(refaux);
                     } else {
                         while (!line.contains("</nodeListReferences>")) {
@@ -671,6 +671,9 @@ public class Main {
                     break;
                 case "06":
                     statistic06(nodes, "");
+                    break;
+                case "07":
+                    statistic07(nodes, "");
                     break;
                 case "08":
                     statistic08(nodes, "");
